@@ -1,0 +1,22 @@
+<!DOCTYPE qgis-layer-definition>
+<qlr>
+  <layer-tree-group name="" expanded="1" checked="Qt::Checked">
+    <layer-tree-layer providerKey="wms" name="Detaljplan (NGP visning)" checked="Qt::Checked"
+      source="IgnoreGetMapUrl=1&amp;contextualWMSLegend=0&amp;crs=epsg:3006&amp;dpiMode=7&amp;featureCount=10&amp;format=image/png&amp;http-header:Authorization=Bearer &lt;INSERT_YOUR_LM_API_KEY_HERE&gt;&amp;layers=detaljplan&amp;styles=&amp;tilePixelRatio=0&amp;url=https://api.lantmateriet.se/distribution/geodatakatalog/visning/v1/capabilities/detaljplan/v1/wms">
+    </layer-tree-layer>
+  </layer-tree-group>
+  <maplayers>
+    <maplayer type="raster">
+      <id>detaljplan_ngp_visning</id>
+      <datasource>IgnoreGetMapUrl=1&amp;contextualWMSLegend=0&amp;crs=epsg:3006&amp;format=image/png&amp;http-header:Authorization=Bearer &lt;INSERT_YOUR_LM_API_KEY_HERE&gt;&amp;layers=detaljplan&amp;url=https://api.lantmateriet.se/distribution/geodatakatalog/visning/v1/capabilities/detaljplan/v1/wms</datasource>
+      <layername>detaljplan</layername>
+      <provider>wms</provider>
+      <srs>
+        <spatialrefsys>
+          <authid>EPSG:3006</authid>
+          <description>SWEREF99 TM</description>
+        </spatialrefsys>
+      </srs>
+    </maplayer>
+  </maplayers>
+</qlr>
