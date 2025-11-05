@@ -6,6 +6,8 @@ A PyQGIS script designed for professional cartography to quickly and iteratively
 
 Prepare the placement lines by creating 2-vertex lines UPHILL where it suits your cartographic needs. These can be in a scratch layer or any geodata format.
 
+Output labels are created in a virtual layer. **Remember** to save it to a persistent format. 
+
 **Credits:**
 * **Ideas, Requirements, and Testing:** Mats Elfström
 * **PyQGIS Implementation and Debugging:** Gemini
