@@ -184,3 +184,4 @@ for kid in kommuner:
     fetch_planbestammelser(kid)
 
 print("\n🏁 All done — planbestämmelser downloaded for all selected kommuner.")
+
