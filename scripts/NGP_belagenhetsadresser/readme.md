@@ -36,7 +36,7 @@ GPKG-filen innehåller ett enda lager: `kommun_centroid`, med attribut som kommu
 Skriptet skapar både data och erbjuder ett exempel på nedladdning:
 
 ### 1. Huvuddelen  
-Körs direkt i Python-konsolen och bygger GeoPacket med en centroid per kommun.  
+Körs direkt i Python-konsolen och bygger GeoPackage med en centroid per kommun.  
 
 ### 2. `download_kommun(kommun_title)`  
 En funktion som kan köras **manuellt i konsolen** om man vill hämta ZIP-filen för en viss kommun:
