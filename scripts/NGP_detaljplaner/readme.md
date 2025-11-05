@@ -11,15 +11,8 @@ Verktygen gör det möjligt att i QGIS:
 
 ## Installation
 
-1. Klona eller ladda ned projektet från GitHub:
-
-   ```bash
-   git clone https://github.com/<användarnamn>/ngp-detaljplan.git
-   ```
-
-   eller klicka på **Code → Download ZIP**.
-
-2. Packa upp mappen och öppna den i QGIS.
+1. Ladda ned *.py-filerna från GitHub
+2. Lägg dem gärna i en samlad mapp.
 3. Öppna **Python‑konsolen** i QGIS (`Ctrl+Alt+P`) och kör skripten enligt instruktionerna nedan.
 4. Se till att din dator har tillgång till internet och att du har en giltig API‑nyckel från Lantmäteriet.
 
