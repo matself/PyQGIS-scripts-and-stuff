@@ -46,6 +46,8 @@ All code contained in this repository is released under the **GNU General Public
 
 ## Contribution
 
-This is primarily a personal repository, but feedback and suggestions are welcome!
-Ideas, requiremennt and debugging/testing is my work.
+This is primarily a personal repository, but feedback and suggestions are welcome.
+
+All ideas, requirements, debugging/testing is my work.
+
 Coding is done by ChatGPT, Gemini and Claude.
