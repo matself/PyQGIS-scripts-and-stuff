@@ -7,6 +7,9 @@ Verktygen gör det möjligt att i QGIS:
 - Ladda ned planbestämmelser (detaljplaners delgeometrier) för valda kommuner.
 - Visa Lantmäteriets officiella WMS‑tjänst för Detaljplan som bakgrundskarta.
 
+**OBSERVERA** Ta helst en kommun i taget. 
+Nedladding av planbestämmelser för flera kommuner i bulk är möjligt, men tar lång tid om de dessutom har många planer. 
+
 ---
 
 ## Installation
