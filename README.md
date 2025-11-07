@@ -1,6 +1,15 @@
 # PyQGIS-scripts-and-stuff
 
 This repository contains a personal collection of small, utility scripts and functions written using **PyQGIS** (the Python API for QGIS). These scripts are designed to automate common geospatial processing tasks, data cleaning operations, and map production workflows within the QGIS environment.
+## Data Sources
+
+The scripts work primarily with Swedish open geospatial data, divided into two main categories:
+
+- **NGP\_*** – structured datasets from the *National Geodata Platform (NGP)*, such as detailed development plans following Boverket and Lantmäteriet specifications.  
+- **HVD\_*** – *High Value Datasets (HVD)* published by Lantmäteriet, accessible through STAC catalogs and open APIs.
+
+Together, these datasets cover both the new, semantically modelled data from NGP and the established open base data released under the EU’s High Value framework.
+
 
 ---
 
