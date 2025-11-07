@@ -1,4 +1,4 @@
-#  STAC Belägenhetsadresser – Index Builder för QGIS
+#  HVD Belägenhetsadresser – Index Builder för QGIS
 
 Detta Python-script skapar ett GeoPackage med en centroidpunkt per svensk kommun, där varje objekt innehåller klickbara länkar till **Lantmäteriets Belägenhetsadresser-dataset** via STAC-API:t.
 
