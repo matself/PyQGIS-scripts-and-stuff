@@ -55,7 +55,7 @@ All code contained in this repository is released under the **GNU General Public
 
 ## Contribution
 
-This is primarily a personal repository, but feedback and suggestions are welcome.
+This is primarily a personal repository, but feedback, improvements and suggestions are welcome.
 
 All ideas, requirements, debugging/testing is my work.
 
