@@ -50,8 +50,8 @@ bbox_3006 = [380000, 6120000, 420000, 6180000]   # Example: part of Skåne
 # ---------------------------------------------------------
 # 3. OUTPUT SETTINGS
 # ---------------------------------------------------------
-output_gpkg = "C:/temp/mhm_skane_polygons.gpkg"
-layer_name = "mhm_skane_polygons"
+output_gpkg = "C:/temp/mhm_req_footprints.gpkg"
+layer_name = "mhm_footprints"
 crs_3006 = QgsCoordinateReferenceSystem("EPSG:3006")
 
 # ---------------------------------------------------------
