@@ -27,6 +27,15 @@
 # Version:
 #   2025-11-10
 # ---------------------------------------------------------
+# Final stable version with:
+#   - Input bbox in EPSG:3006
+#   - STAC search transformed to EPSG:4326
+#   - Output polygons in EPSG:3006
+#   - Collection bbox prefiltering
+#   - Rate-limit protection
+#
+# Designed for QGIS Python Console
+# ---------------------------------------------------------
 
 import requests, time
 from qgis.core import (
@@ -41,16 +50,15 @@ from PyQt5.QtCore import QVariant
 # ---------------------------------------------------------
 consumer_key = "REPLACE_ME"
 consumer_secret = "REPLACE_ME"
-
 # ---------------------------------------------------------
 # 2. USER INPUT BBOX (EPSG:3006 – SWEREF 99 TM)
 # ---------------------------------------------------------
-bbox_3006 = [380000, 6120000, 420000, 6180000]   # Example: part of Skåne
+bbox_3006 = [337000, 6129000, 485000, 6257000]   # Example: Skåne+
 
 # ---------------------------------------------------------
-# 3. OUTPUT SETTINGS
+# 3. OUTPUT SETTINGS (EPSG:3006)
 # ---------------------------------------------------------
-output_gpkg = "C:/temp/mhm_req_footprints.gpkg"
+output_gpkg = "C:/temp/mhm_footprints.gpkg"
 layer_name = "mhm_footprints"
 crs_3006 = QgsCoordinateReferenceSystem("EPSG:3006")
 
@@ -120,7 +128,7 @@ for c in collections_full:
 print(f"✅ {len(relevant_collections)} collections intersect bbox")
 
 # ---------------------------------------------------------
-# 9. STAC SEARCH FUNCTION (WITH RATE-LIMIT PROTECTION)
+# 9. STAC SEARCH FUNCTION (RATE-LIMIT SAFE)
 # ---------------------------------------------------------
 def fetch_items(collection_id):
     url = "https://api.lantmateriet.se/stac-hojd/v1/search"
@@ -135,7 +143,6 @@ def fetch_items(collection_id):
     while True:
         r = requests.post(url, headers=headers, json=payload)
 
-        # Handle rate-limiting gracefully
         if r.status_code == 429:
             print("⚠️ 429 Too Many Requests – sleeping 1 second ...")
             time.sleep(1)
@@ -148,7 +155,7 @@ def fetch_items(collection_id):
         data = r.json()
         items.extend(data.get("features", []))
 
-        # Pagination handling
+        # pagination
         next_url = None
         for link in data.get("links", []):
             if link.get("rel") == "next":
@@ -161,13 +168,12 @@ def fetch_items(collection_id):
         url = next_url
         payload = None
 
-        # Delay to avoid hitting rate limits
-        time.sleep(0.3)
+        time.sleep(0.3)  # avoid rate-limit
 
     return items
 
 # ---------------------------------------------------------
-# 10. PREPARE OUTPUT GPKG
+# 10. PREPARE OUTPUT GPKG (EPSG:3006 POLYGONS)
 # ---------------------------------------------------------
 fields = QgsFields()
 fields.append(QgsField("id", QVariant.String))
@@ -176,3 +182,76 @@ fields.append(QgsField("datetime", QVariant.String))
 fields.append(QgsField("href", QVariant.String))
 
 writer = QgsVectorFileWriter(
+    output_gpkg,
+    "UTF-8",
+    fields,
+    QgsWkbTypes.Polygon,
+    crs_3006,
+    "GPKG"
+)
+
+if writer.hasError() != QgsVectorFileWriter.NoError:
+    raise Exception(writer.errorMessage())
+
+# ---------------------------------------------------------
+# 11. LOOP OVER COLLECTIONS AND WRITE FEATURES
+# ---------------------------------------------------------
+total = 0
+
+for coll in relevant_collections:
+    print(f"\n→ Searching {coll} ...")
+
+    items = fetch_items(coll)
+    print(f"  → {len(items)} tiles")
+
+    # Delay between collections
+    time.sleep(0.5)
+
+    for f in items:
+        fid = f["id"]
+        dt = f["properties"].get("datetime")
+        href = f["assets"]["data"]["href"]
+        bb = f.get("bbox")
+        if not bb:
+            continue
+
+        minlon, minlat, maxlon, maxlat = bb  # EPSG:4326
+
+        # Build polygon (EPSG:4326)
+        poly = QgsGeometry.fromPolygonXY([[
+            QgsPointXY(minlon, minlat),
+            QgsPointXY(maxlon, minlat),
+            QgsPointXY(maxlon, maxlat),
+            QgsPointXY(minlon, maxlat),
+            QgsPointXY(minlon, minlat)
+        ]])
+
+        # Reproject to EPSG:3006
+        poly.transform(t_4326_to_3006)
+
+        feat = QgsFeature()
+        feat.setFields(fields)
+        feat.setAttribute("id", fid)
+        feat.setAttribute("collection", coll)
+        feat.setAttribute("datetime", dt)
+        feat.setAttribute("href", href)
+        feat.setGeometry(poly)
+
+        writer.addFeature(feat)
+        total += 1
+
+del writer
+
+print(f"\n✅ Done. {total} polygons written to {output_gpkg}")
+
+# ---------------------------------------------------------
+# 12. LOAD INTO QGIS
+# ---------------------------------------------------------
+vlayer = QgsVectorLayer(
+    f"{output_gpkg}|layername={layer_name}",
+    layer_name,
+    "ogr"
+)
+
+QgsProject.instance().addMapLayer(vlayer)
+print("✅ Layer added to QGIS")
