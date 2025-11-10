@@ -1,4 +1,4 @@
-# Markhöjdmodell 1m -- STAC-hämtning av tile-polygoner
+# Markhöjdmodell 1m - STAC-hämtning av tile-polygoner
 
 Detta verktyg hämtar alla 1m-tiles från Lantmäteriets Markhöjdmodell som
 faller inom ett angivet område. Resultatet lagras som polygoner i ett
