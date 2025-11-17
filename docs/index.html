@@ -15,42 +15,34 @@
         color: #2f372e;
         background: #f6faf4;
     }
-
     h1 {
         font-size: 30px;
         margin-bottom: 10px;
         color: #2a4a2a;
     }
-
     h2 {
         margin-top: 30px;
         font-size: 22px;
         color: #315931;
     }
-
     .intro {
         margin-bottom: 30px;
         font-size: 16px;
     }
-
     ul {
         padding-left: 20px;
     }
-
     li {
         margin-bottom: 8px;
         font-size: 17px;
     }
-
     a {
         color: #1b5e20;
         text-decoration: none;
     }
-
     a:hover {
         text-decoration: underline;
     }
-
     .latin {
         color: #5a6b5a;
         font-style: italic;
@@ -69,82 +61,62 @@ Alla kartor är genererade från Artportalens observationsdata och sammanställd
 </p>
 
 <h2>Tillgängliga kartor</h2>
-<p>(Listan uppdateras automatiskt när nya kartor läggs till i mappen <code>docs/</code>.)</p>
 
 <ul id="mapList">
     <li>Laddar kartor…</li>
 </ul>
 
 <script>
-// Converts a file name like "backsippa_skane.html" into:
-// Swedish: Backsippa skane
-// Latin: from the part after the last underscore? We can only guess.
-// Better: require filenames formatted as swedishname__latinname.html (double underscore)
-// But since you didn’t request that, we extract Latin from inside parentheses if present.
-//
-// So: "backsippa_skane.html" -> Swedish: "Backsippa skane" (no Latin name)
-// If file contains "(latin)" inside name, we use it.
+// Optional Latin names (add more later)
+const latinLookup = {
+    "backsippa": "Pulsatilla vulgaris",
+    "jattebalsamin": "Impatiens glandulifera",
+    "martorn": "Eryngium maritimum",
+    "pyrola sp": "Pyrola sp.",
+    "skunkkalla": "Lysichiton americanus"
+};
 
-function makeNames(filename) {
+function formatName(filename) {
+    // remove extension
     let base = filename.replace(".html", "");
 
-    // Replace underscores with spaces
-    let clean = base.replace(/_/g, " ");
+    // swedish name = before first underscore
+    const swedish_raw = base.split("_")[0];
+    const swedish = swedish_raw.charAt(0).toUpperCase() + swedish_raw.slice(1);
 
-    // Try to extract Latin name inside parentheses
-    let match = clean.match(/\(([^)]+)\)/);
-
-    let latin = match ? match[1] : null;
-
-    // Remove parentheses from the Swedish part
-    let swedish = clean.replace(/\(.*?\)/, "").trim();
-
-    // Capitalize Swedish
-    swedish = swedish.charAt(0).toUpperCase() + swedish.slice(1);
+    // latin from lookup
+    const latin_key = swedish_raw.toLowerCase().replace(/ /g, "");
+    const latin = latinLookup[swedish_raw.toLowerCase()] || null;
 
     return { swedish, latin };
 }
 
-async function loadMapList() {
+async function loadList() {
     const list = document.getElementById("mapList");
     list.innerHTML = "";
 
     try {
-        const response = await fetch(window.location.href);
-        const text = await response.text();
+        const response = await fetch("list.json");
+        const files = await response.json();
 
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(text, "text/html");
-        const links = [...doc.querySelectorAll("a")];
+        files.forEach(file => {
+            const { swedish, latin } = formatName(file);
 
-        const htmlFiles = links
-            .map(a => a.getAttribute("href"))
-            .filter(href => href.endsWith(".html") && href !== "index.html");
-
-        if (htmlFiles.length === 0) {
-            list.innerHTML = "<li>Inga kartor hittades.</li>";
-            return;
-        }
-
-        htmlFiles.forEach(file => {
-            const names = makeNames(file);
             const li = document.createElement("li");
-
             li.innerHTML = `
-                <a href="${file}">${names.swedish}</a>
-                ${names.latin ? `<span class="latin">(${names.latin})</span>` : ""}
+                <a href="${file}">${swedish}</a>
+                ${latin ? `<span class="latin">(${latin})</span>` : ""}
             `;
-
             list.appendChild(li);
         });
 
     } catch (err) {
-        list.innerHTML = "<li>Kunde inte läsa katalogen.</li>";
         console.error(err);
+        list.innerHTML = "<li>Kunde inte läsa list.json.</li>";
     }
 }
 
-loadMapList();
+loadList();
 </script>
 
 </body>
