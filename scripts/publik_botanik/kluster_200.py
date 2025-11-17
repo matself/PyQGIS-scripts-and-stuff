@@ -177,7 +177,7 @@ html = f"""
   <strong>Lokaler – 200m kluster</strong><br>
   <span style="color:#1a9850;">●</span> Stark aktuell lokal<br>
   <span style="color:#91cf60;">●</span> Sporadisk aktuell lokal<br>
-  <span style="color:#cccccc;">●</span> Historisk lokal<br>
+  <span style="color:#555555;">●</span> Historisk lokal<br>
   <span style="color:#fdae61;">●</span> Ej återfunnen<br>
   <span style="color:#d73027;">●</span> Avlägsnad lokal<br>
   <span style="color:#2b83ba;">●</span> Osäker<br>
