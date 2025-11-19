@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<title>Svensk botanik – interaktiva artkartor</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+    body {
+        font-family: "Arial", sans-serif;
+        max-width: 900px;
+        margin: 40px auto;
+        line-height: 1.6;
+        padding: 0 20px;
+        color: #2f372e;
+        background: #f6faf4;
+    }
+    h1 {
+        font-size: 30px;
+        margin-bottom: 10px;
+        color: #2a4a2a;
+    }
+    h2 {
+        margin-top: 30px;
+        font-size: 22px;
+        color: #315931;
+    }
+    .intro {
+        margin-bottom: 30px;
+        font-size: 16px;
+    }
+    ul {
+        padding-left: 20px;
+    }
+    li {
+        margin-bottom: 8px;
+        font-size: 17px;
+    }
+    a {
+        color: #1b5e20;
+        text-decoration: none;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+    .latin {
+        color: #5a6b5a;
+        font-style: italic;
+        margin-left: 6px;
+    }
+</style>
+</head>
+
+<body>
+
+<h1>Svensk botanik – interaktiva artkartor</h1>
+
+<p class="intro">
+Interaktiva kartor som visar förändringar av lokaler över tid.
+Alla kartor är genererade från Artportalens observationsdata och sammanställda med ett enhetligt 200-meters rutnät.
+</p>
+
+<h2>Tillgängliga kartor</h2>
+
+<ul id="mapList">
+    <li>Laddar kartor…</li>
+</ul>
+
+<script>
+// Optional Latin names (add more later)
+const latinLookup = {
+    "backsippa": "Pulsatilla vulgaris",
+    "jattebalsamin": "Impatiens glandulifera",
+    "martorn": "Eryngium maritimum",
+    "pyrola sp": "Pyrola sp.",
+    "skunkkalla": "Lysichiton americanus"
+};
+
+function formatName(filename) {
+    // remove extension
+    let base = filename.replace(".html", "");
+
+    // swedish name = before first underscore
+    const swedish_raw = base.split("_")[0];
+    const swedish = swedish_raw.charAt(0).toUpperCase() + swedish_raw.slice(1);
+
+    // latin from lookup
+    const latin_key = swedish_raw.toLowerCase().replace(/ /g, "");
+    const latin = latinLookup[swedish_raw.toLowerCase()] || null;
+
+    return { swedish, latin };
+}
+
+async function loadList() {
+    const list = document.getElementById("mapList");
+    list.innerHTML = "";
+
+    try {
+        const response = await fetch("list.json");
+        const files = await response.json();
+
+        files.forEach(file => {
+            const { swedish, latin } = formatName(file);
+
+            const li = document.createElement("li");
+            li.innerHTML = `
+                <a href="${file}">${swedish}</a>
+                ${latin ? `<span class="latin">(${latin})</span>` : ""}
+            `;
+            list.appendChild(li);
+        });
+
+    } catch (err) {
+        console.error(err);
+        list.innerHTML = "<li>Kunde inte läsa list.json.</li>";
+    }
+}
+
+loadList();
+</script>
+
+</body>
+</html>
