@@ -24,8 +24,8 @@ Skriptet:
 1.  Hämtar STAC-metadata från Lantmäteriet\
 2.  Laddar ner ZIP-filen med nationellt ortnamns-GPKG\
 3.  Packar upp filen lokalt\
-4.  Läser in ortnamnen i QGIS via PyQGIS\
-5.  Skapar ett GPKG per län baserat på attributet `lanskod`\
+4.  Läser in den stora filen med alla ortnamnen i QGIS via PyQGIS\
+5.  Skriver ett GPKG per län baserat på attributet `lanskod`\
 6.  Sparar filerna på formen `ortnamn_lan_<kod>_<namn>.gpkg`
 
 ------------------------------------------------------------------------
