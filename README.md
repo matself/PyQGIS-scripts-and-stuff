@@ -42,7 +42,7 @@ The scripts in the `scripts/` folder are executed directly within the QGIS Pytho
 1.  Open **QGIS Desktop**.
 2.  Open the **Python Console** (Plugins > Python Console).
 3.  Click the **"Show Editor"** button (usually a small file icon or pencil icon) within the Python Console panel to open the script editor.
-4.  Use the **"Open file"** icon within the editor to browse to and select the desired script (`.py`) file from your local repository.
+4.  Use the **"Open file"** icon within the editor to browse to and select the desired script (`.py`) file from your local repository. Make sure to add your current credentials at the indicated places in the code.
 5.  Press the **"Run script"** button (usually a green play button or similar icon) to execute the code.
 
 ---
