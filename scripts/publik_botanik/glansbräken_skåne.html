@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="utf-8" />
+<title>Lokaler – 200m kluster – glansbräken_skåne</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<style>
+  body { margin: 0; padding: 0; }
+  #map { width: 100vw; height: 100vh; }
+  .legend-box {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 9999;
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 0 6px rgba(0,0,0,0.3);
+    font-size: 12px;
+  }
+</style>
+</head>
+
+<body>
+<div id="map"></div>
+
+<div class="legend-box">
+  <strong>Lokaler – 200m kluster</strong><br>
+  <span style="color:#1a9850;">●</span> Stark aktuell lokal<br>
+  <span style="color:#91cf60;">●</span> Sporadisk aktuell lokal<br>
+  <span style="color:#aaaaaaa;">●</span> Historisk lokal<br>
+  <span style="color:#fdae61;">●</span> Ej återfunnen<br>
+  <span style="color:#d73027;">●</span> Avlägsnad lokal<br>
+  <span style="color:#2b83ba;">●</span> Osäker<br>
+  <br>Totalt antal lokaler: 33
+</div>
+
+<script>
+var lokaler = [{"lat": 56.302249999999994, "lon": 12.46313, "firstYear": 2004, "lastYear": 2025, "lastPresentYear": 2025, "nPresent": 9, "nNotRedisc": 0, "nRemoved": 0, "category": "Stark aktuell lokal"}, {"lat": 56.30012, "lon": 12.45038, "firstYear": 2010, "lastYear": 2025, "lastPresentYear": 2025, "nPresent": 2, "nNotRedisc": 0, "nRemoved": 0, "category": "Sporadisk aktuell lokal"}, {"lat": 56.29552285714286, "lon": 12.50568857142857, "firstYear": 2004, "lastYear": 2025, "lastPresentYear": 2025, "nPresent": 7, "nNotRedisc": 0, "nRemoved": 0, "category": "Stark aktuell lokal"}, {"lat": 56.29947275862069, "lon": 12.483555172413793, "firstYear": 2002, "lastYear": 2025, "lastPresentYear": 2025, "nPresent": 29, "nNotRedisc": 0, "nRemoved": 0, "category": "Stark aktuell lokal"}, {"lat": 56.290129534883725, "lon": 12.484359069767443, "firstYear": 2000, "lastYear": 2025, "lastPresentYear": 2025, "nPresent": 43, "nNotRedisc": 0, "nRemoved": 0, "category": "Stark aktuell lokal"}, {"lat": 56.29104230769231, "lon": 12.477702307692308, "firstYear": 2001, "lastYear": 2025, "lastPresentYear": 2025, "nPresent": 13, "nNotRedisc": 0, "nRemoved": 0, "category": "Stark aktuell lokal"}, {"lat": 56.29927, "lon": 12.45623, "firstYear": 2024, "lastYear": 2024, "lastPresentYear": 2024, "nPresent": 1, "nNotRedisc": 0, "nRemoved": 0, "category": "Sporadisk aktuell lokal"}, {"lat": 56.29053555555556, "lon": 12.480216666666667, "firstYear": 2002, "lastYear": 2023, "lastPresentYear": 2023, "nPresent": 9, "nNotRedisc": 0, "nRemoved": 0, "category": "Stark aktuell lokal"}, {"lat": 55.525, "lon": 13.21976, "firstYear": 2023, "lastYear": 2023, "lastPresentYear": 2023, "nPresent": 1, "nNotRedisc": 0, "nRemoved": 0, "category": "Sporadisk aktuell lokal"}, {"lat": 55.556912727272724, "lon": 14.30173181818182, "firstYear": 2001, "lastYear": 2023, "lastPresentYear": 2023, "nPresent": 11, "nNotRedisc": 0, "nRemoved": 0, "category": "Stark aktuell lokal"}, {"lat": 55.55966, "lon": 14.29945, "firstYear": 2007, "lastYear": 2023, "lastPresentYear": 2011, "nPresent": 3, "nNotRedisc": 1, "nRemoved": 0, "category": "Ej återfunnen"}, {"lat": 56.30063857142857, "lon": 12.449552857142859, "firstYear": 2004, "lastYear": 2022, "lastPresentYear": 2022, "nPresent": 7, "nNotRedisc": 0, "nRemoved": 0, "category": "Sporadisk aktuell lokal"}, {"lat": 56.3023125, "lon": 12.464075000000001, "firstYear": 2008, "lastYear": 2022, "lastPresentYear": 2022, "nPresent": 4, "nNotRedisc": 0, "nRemoved": 0, "category": "Sporadisk aktuell lokal"}, {"lat": 56.300394999999995, "lon": 12.450715, "firstYear": 2004, "lastYear": 2020, "lastPresentYear": 2020, "nPresent": 2, "nNotRedisc": 0, "nRemoved": 0, "category": "Sporadisk aktuell lokal"}, {"lat": 56.2896425, "lon": 12.4857475, "firstYear": 2004, "lastYear": 2020, "lastPresentYear": 2020, "nPresent": 4, "nNotRedisc": 0, "nRemoved": 0, "category": "Sporadisk aktuell lokal"}, {"lat": 55.66229461538462, "lon": 14.27603923076923, "firstYear": 2001, "lastYear": 2019, "lastPresentYear": 2019, "nPresent": 13, "nNotRedisc": 0, "nRemoved": 0, "category": "Osäker"}, {"lat": 55.66459, "lon": 14.27418, "firstYear": 2015, "lastYear": 2015, "lastPresentYear": 2015, "nPresent": 1, "nNotRedisc": 0, "nRemoved": 0, "category": "Osäker"}, {"lat": 56.2916, "lon": 12.52447, "firstYear": 2014, "lastYear": 2014, "lastPresentYear": 2014, "nPresent": 1, "nNotRedisc": 0, "nRemoved": 0, "category": "Osäker"}, {"lat": 55.6614825, "lon": 14.275612500000001, "firstYear": 2007, "lastYear": 2014, "lastPresentYear": 2014, "nPresent": 4, "nNotRedisc": 0, "nRemoved": 0, "category": "Osäker"}, {"lat": 55.65182, "lon": 14.26579, "firstYear": 2011, "lastYear": 2011, "lastPresentYear": 2011, "nPresent": 1, "nNotRedisc": 0, "nRemoved": 0, "category": "Osäker"}, {"lat": 56.29539, "lon": 12.458475, "firstYear": 2010, "lastYear": 2011, "lastPresentYear": 2011, "nPresent": 4, "nNotRedisc": 0, "nRemoved": 0, "category": "Osäker"}, {"lat": 56.30193, "lon": 12.46736, "firstYear": 2011, "lastYear": 2011, "lastPresentYear": 2011, "nPresent": 1, "nNotRedisc": 0, "nRemoved": 0, "category": "Osäker"}, {"lat": 56.293542, "lon": 12.462426, "firstYear": 2010, "lastYear": 2011, "lastPresentYear": 2011, "nPresent": 5, "nNotRedisc": 0, "nRemoved": 0, "category": "Osäker"}, {"lat": 55.548631666666665, "lon": 14.289685, "firstYear": 2001, "lastYear": 2011, "lastPresentYear": 2011, "nPresent": 6, "nNotRedisc": 0, "nRemoved": 0, "category": "Osäker"}, {"lat": 56.28713, "lon": 12.48868, "firstYear": 2004, "lastYear": 2011, "lastPresentYear": 2004, "nPresent": 1, "nNotRedisc": 2, "nRemoved": 0, "category": "Ej återfunnen"}, {"lat": 56.29443, "lon": 12.45944, "firstYear": 2010, "lastYear": 2010, "lastPresentYear": 2010, "nPresent": 1, "nNotRedisc": 0, "nRemoved": 0, "category": "Osäker"}, {"lat": 56.29122, "lon": 12.47378, "firstYear": 2010, "lastYear": 2010, "lastPresentYear": 2010, "nPresent": 1, "nNotRedisc": 0, "nRemoved": 0, "category": "Osäker"}, {"lat": 56.29154, "lon": 12.470525, "firstYear": 2010, "lastYear": 2010, "lastPresentYear": 2010, "nPresent": 2, "nNotRedisc": 0, "nRemoved": 0, "category": "Osäker"}, {"lat": 56.29176, "lon": 12.46865, "firstYear": 2010, "lastYear": 2010, "lastPresentYear": 2010, "nPresent": 2, "nNotRedisc": 0, "nRemoved": 0, "category": "Osäker"}, {"lat": 56.3003, "lon": 12.48027, "firstYear": 2010, "lastYear": 2010, "lastPresentYear": 2010, "nPresent": 1, "nNotRedisc": 0, "nRemoved": 0, "category": "Osäker"}, {"lat": 56.29562, "lon": 12.50702, "firstYear": 2010, "lastYear": 2010, "lastPresentYear": 2010, "nPresent": 1, "nNotRedisc": 0, "nRemoved": 0, "category": "Osäker"}, {"lat": 56.30001, "lon": 12.44958, "firstYear": 2004, "lastYear": 2004, "lastPresentYear": 2004, "nPresent": 1, "nNotRedisc": 0, "nRemoved": 0, "category": "Historisk lokal (inga sentida fynd)"}, {"lat": 56.291426666666666, "lon": 12.476936666666667, "firstYear": 2001, "lastYear": 2002, "lastPresentYear": 2002, "nPresent": 3, "nNotRedisc": 0, "nRemoved": 0, "category": "Historisk lokal (inga sentida fynd)"}];
+
+const map = L.map('map').setView([55.9, 14.0], 8);
+L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  maxZoom: 19
+}).addTo(map);
+
+function catColor(c) {
+  if (c === "Stark aktuell lokal") return "#1a9850";
+  if (c === "Sporadisk aktuell lokal") return "#91cf60";
+  if (c === "Historisk lokal (inga sentida fynd)") return "#aaaaaa";
+  if (c === "Ej återfunnen") return "#fdae61";
+  if (c === "Avlägsnad lokal") return "#d73027";
+  return "#2b83ba";
+}
+
+lokaler.forEach(l => {
+  const size = 4 + Math.min(16, l.nPresent + l.nNotRedisc + l.nRemoved);
+  const marker = L.circleMarker([l.lat, l.lon], {
+    radius: size,
+    color: catColor(l.category),
+    fillColor: catColor(l.category),
+    fillOpacity: 0.7,
+    weight: 1
+  }).bindPopup(
+    `<strong>${l.category}</strong><br>
+     Första år: ${l.firstYear}<br>
+     Sista år: ${l.lastYear}<br>
+     Sista år med fynd: ${l.lastPresentYear || "–"}<br>
+     Noterad: ${l.nPresent}<br>
+     Ej återfunnen: ${l.nNotRedisc}<br>
+     Avlägsnad: ${l.nRemoved}`
+  );
+  marker.addTo(map);
+});
+</script>
+
+</body></html>
