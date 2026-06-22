@@ -35,10 +35,10 @@ The NGP Detaljplan WMS layer (`detaljplan_template.qlr`) also needs a UUID token
 
 This is the most active part of the repo. The flow is:
 
-1. **Source data** — GeoJSON exported from Artportalen (Swedish species observation database). Each feature is a point with `time`, `notRedisc`, and `removed` properties.
+1. **Source data** — GeoJSON exported from Artportalen (Swedish species observation database). Each feature is a point with `time`, `notRedisc`, and `removed` properties. Source JSONs live in `scripts/publik_botanik/`.
 2. **Processing script** — Reads the GeoJSON, clusters observations onto a fixed 100 m or 200 m grid using approximate meter projection, then classifies each grid cell into one of: `Stark aktuell lokal`, `Sporadisk aktuell lokal`, `Historisk lokal (inga sentida fynd)`, `Ej återfunnen`, `Avlägsnad lokal`, or `Osäker`.
-3. **Output** — A self-contained `.html` file with the clustered data embedded as a JavaScript variable, rendered via Leaflet.js with OSM tiles. No external data dependencies at runtime.
-4. **Publishing** — The generated HTML files are placed in `docs/` alongside their source JSON. The file `docs/list.json` is the catalog that `docs/index.html` reads to build the species map index page.
+3. **Output** — A self-contained `.html` file written next to the input JSON in `scripts/publik_botanik/`, with the clustered data embedded as a JavaScript variable, rendered via Leaflet.js with OSM tiles. No external data dependencies at runtime.
+4. **Publishing** — The generated HTML is manually moved to `docs/` and `docs/list.json` is updated. The source JSON files stay in `scripts/publik_botanik/` and are not copied to `docs/`.
 
 ### Variant scripts
 
@@ -67,6 +67,20 @@ Two-step workflow for Sweden's National Geodata Platform detailed development pl
 
 1. `NGP_detaljplanekommuner.py` — Fetches all municipalities from NGP OGC API Features, writes bounding boxes as `NGP_detaljplanekommuner.gpkg` in EPSG:3006.
 2. `NGP_planbestammelser.py` — Reads selected features from the above layer, downloads plan regulations per municipality into `NGP_plans/planbestammelser_<id>.gpkg`. Defaults to Skåne (IDs starting with `12`) if nothing is selected.
+
+## Architecture: contour_labeler
+
+A QGIS Python Console script for cartographic contour label placement. Define the function once by loading the script, then call it repeatedly per placement line:
+
+```python
+generate_slope_aligned_labels("5m_cont", "placelines")
+```
+
+**Requirements:** A contour vector layer with an elevation field named exactly `z` (case-sensitive), and a placement layer of 2-vertex lines drawn uphill. Output is appended to a memory layer named `ContourLabelPoints`. Set "Show upside-down labels" → "when rotation defined" in the Layer Styling Panel for correct orientation.
+
+## Architecture: map_sheets_along_route
+
+A QGIS Python Console script that generates evenly spaced rectangular map sheets along a selected route polyline, suitable for QGIS Atlas export. Sheets are 280 × 180 m (1:1000 scale) oriented perpendicular to the route. After running, use the output `map_sheets` memory layer as the Atlas coverage layer and set the map rotation expression to `(180 - "azi") % 360`.
 
 ## GitHub Pages site
 
