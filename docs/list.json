@@ -1,12 +1,52 @@
 [
-    "backsippa_skane.html",
-    "jattebalsamin_skane.html",
-    "martorn_skane.html",
-    "pyrola_sp_skane.html",
-    "skunkkalla_skane.html",
-	"knylhavre_skane.html",
-	"jatteloka_skane",
-	"cb_backsippa_skane",
-	"goknycklar_skane.html",
-	"folje_vityxne_mv.html"
+    {
+        "file": "backsippa_skane.html",
+        "swedish": "Backsippa",
+        "latin": "Pulsatilla vulgaris"
+    },
+    {
+        "file": "jattebalsamin_skane.html",
+        "swedish": "Jättebalsamin",
+        "latin": "Impatiens glandulifera"
+    },
+    {
+        "file": "martorn_skane.html",
+        "swedish": "Martorn",
+        "latin": "Eryngium maritimum"
+    },
+    {
+        "file": "pyrola_sp_skane.html",
+        "swedish": "Pyrola sp.",
+        "latin": "Pyrola sp."
+    },
+    {
+        "file": "skunkkalla_skane.html",
+        "swedish": "Skunkkalla",
+        "latin": "Lysichiton americanus"
+    },
+    {
+        "file": "knylhavre_skane.html",
+        "swedish": "Knylhavre",
+        "latin": "Arrhenatherum elatius"
+    },
+    {
+        "file": "jatteloka_skane",
+        "swedish": "Jätteloka",
+        "latin": "Heracleum mantegazzianum"
+    },
+    {
+        "file": "cb_backsippa_skane",
+        "swedish": "Backsippa (cb)",
+        "latin": "Pulsatilla vulgaris"
+    },
+    {
+        "file": "goknycklar_skane.html",
+        "swedish": "Göknycklar",
+        "latin": ""
+    },
+    {
+        "file": "folje_vityxne_mv.html",
+        "swedish": "Vityxne",
+        "latin": ""
+    }
 ]

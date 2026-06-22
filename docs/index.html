@@ -67,30 +67,6 @@ Alla kartor är genererade från Artportalens observationsdata och sammanställd
 </ul>
 
 <script>
-// Optional Latin names (add more later)
-const latinLookup = {
-    "backsippa": "Pulsatilla vulgaris",
-    "jattebalsamin": "Impatiens glandulifera",
-    "martorn": "Eryngium maritimum",
-    "pyrola sp": "Pyrola sp.",
-    "skunkkalla": "Lysichiton americanus"
-};
-
-function formatName(filename) {
-    // remove extension
-    let base = filename.replace(".html", "");
-
-    // swedish name = before first underscore
-    const swedish_raw = base.split("_")[0];
-    const swedish = swedish_raw.charAt(0).toUpperCase() + swedish_raw.slice(1);
-
-    // latin from lookup
-    const latin_key = swedish_raw.toLowerCase().replace(/ /g, "");
-    const latin = latinLookup[swedish_raw.toLowerCase()] || null;
-
-    return { swedish, latin };
-}
-
 async function loadList() {
     const list = document.getElementById("mapList");
     list.innerHTML = "";
@@ -99,9 +75,7 @@ async function loadList() {
         const response = await fetch("list.json");
         const files = await response.json();
 
-        files.forEach(file => {
-            const { swedish, latin } = formatName(file);
-
+        files.forEach(({ file, swedish, latin }) => {
             const li = document.createElement("li");
             li.innerHTML = `
                 <a href="${file}">${swedish}</a>
